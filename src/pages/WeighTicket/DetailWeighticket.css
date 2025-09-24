@@ -1,0 +1,30 @@
+.animate-dash {
+  border-style: dashed;
+  border-width: 4px;
+  border-color: #6b7280; /* สีเริ่มต้น */
+  border-radius: 0.5rem;
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0% {
+    border-color: #6b7280;
+    box-shadow: 0 0 5px #6b7280;
+  }
+  25% {
+    border-color: #f59e0b; /* สีส้ม */
+    box-shadow: 0 0 10px #f59e0b;
+  }
+  50% {
+    border-color: #ef4444; /* สีแดง */
+    box-shadow: 0 0 15px #ef4444;
+  }
+  75% {
+    border-color: #10b981; /* สีเขียว */
+    box-shadow: 0 0 10px #10b981;
+  }
+  100% {
+    border-color: #6b7280;
+    box-shadow: 0 0 5px #6b7280;
+  }
+}

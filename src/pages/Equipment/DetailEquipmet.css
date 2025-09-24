@@ -1,0 +1,45 @@
+.animate-dash-equipment {
+  border-style: dashed;
+  border-width: 4px;
+  border-radius: 0.5rem;
+  animation: blink-green 1s linear infinite;
+}
+
+.animate-dash-equipment-stop {
+  border-style: dashed;
+  border-width: 4px;
+  border-radius: 0.5rem;
+  animation: blink-red 1s linear infinite;
+}
+
+/* กระพริบสีเขียว */
+@keyframes blink-green {
+  0% {
+    border-color: #10b981;
+    box-shadow: 0 0 5px #10b981;
+  }
+  50% {
+    border-color: #34d399;
+    box-shadow: 0 0 15px #34d399;
+  }
+  100% {
+    border-color: #10b981;
+    box-shadow: 0 0 5px #10b981;
+  }
+}
+
+/* กระพริบสีแดง */
+@keyframes blink-red {
+  0% {
+    border-color: #ef4444;
+    box-shadow: 0 0 5px #ef4444;
+  }
+  50% {
+    border-color: #f87171;
+    box-shadow: 0 0 15px #f87171;
+  }
+  100% {
+    border-color: #ef4444;
+    box-shadow: 0 0 5px #ef4444;
+  }
+}

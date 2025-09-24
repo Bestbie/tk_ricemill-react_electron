@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/*" href="/logo-fav.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TK Rice</title>
+
+    <!-- Content Security Policy -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' blob:;
+  worker-src 'self' blob:;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data: https://i.pravatar.cc;
+  connect-src 'self' http://localhost:5173 ws://localhost:5173;
+">
+
+    <!-- Tailwind CSS (from Vite build, dev server handles automatically) -->
+  </head>
+  <body class="bg-gray-50">
+    <div id="root"></div>
+    
+    <!-- React entry point -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

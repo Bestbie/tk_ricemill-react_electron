@@ -3,16 +3,14 @@ import { FiX, FiCheck, FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-const CreateStock = () => {
+const CreateCreditor = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    lot_number: "",
-    supplier: "",
-    gross_weight: "",
-    variety: "",
-    moisture: "",
-    status: "",
+    c_number: "",
+    name: "",
+    address: "",
+    phone: "",
   });
 
   const handleChange = (e) => {
@@ -27,122 +25,98 @@ const CreateStock = () => {
     // แสดง Toast
     toast.success("บันทึกสำเร็จ!");
 
-    // ไปหน้า /weigh_ticket หลัง 1 วินาที
+    // ไปหน้า /creditor หลัง 1 วินาที
     setTimeout(() => {
-      navigate("/stock");
+      navigate("/creditor");
     }, 1000);
   };
 
   const handleReset = () => {
     setFormData({
-      lot_number: "",
-      supplier: "",
-      gross_weight: "",
-      variety: "",
-      moisture: "",
-      status: "",
+      c_number: "",
+      name: "",
+      address: "",
+      phone: "",
     });
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow max-w-12xl mx-auto mt-6 relative">
+    <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       <button
-        onClick={() => navigate("/finance")}
+        onClick={() => navigate("/creditor")}
         className="absolute top-4 right-4 flex items-center justify-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 min-w-[100px] rounded-full shadow cursor-pointer"
       >
         <FiArrowLeft className="w-4 h-4" />
         ย้อนกลับ
       </button>
-      <h1 className="text-2xl font-bold mb-4">เพิ่มสต๊อก — Lot</h1>
+      <h1 className="text-2xl font-bold mb-4">เพิ่มเจ้าหนี้</h1>
       <hr className="border-b-1 border-gray-400 mb-4" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* แถว 1 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="lot_number" className="mb-1 font-medium">
-              เลขที่ Lot
+            <label htmlFor="c_number" className="mb-1 font-medium">
+              เลขที่เจ้าหนี้
             </label>
             <input
               type="text"
-              id="lot_number"
-              name="lot_number"
-              placeholder="เลขที่ Lot"
-              value={formData.lot_number}
+              id="c_number"
+              name="c_number"
+              placeholder="เลขที่เจ้าหนี้"
+              value={formData.c_number}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
+
           <div className="flex flex-col">
-            <label htmlFor="supplier" className="mb-1 font-medium">
-              ผู้ส่ง
+            <label htmlFor="name" className="mb-1 font-medium">
+              ชื่อเจ้าหนี้
             </label>
             <input
               type="text"
-              id="supplier"
-              name="supplier"
-              placeholder="ผู้ส่ง"
-              value={formData.supplier}
+              id="name"
+              name="name"
+              placeholder="ชื่อเจ้าหนี้"
+              value={formData.name}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
         </div>
-
         {/* แถว 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="gross_weight" className="mb-1 font-medium">
-              น้ำหนักรวม
+            <label htmlFor="phone" className="mb-1 font-medium">
+              เบอร์โทร
             </label>
             <input
-              type="text"
-              id="gross_weight"
-              name="gross_weight"
-              placeholder="น้ำหนักรวม"
-              value={formData.gross_weight}
+              type="number"
+              id="phone"
+              name="phone"
+              placeholder="เบอร์โทร"
+              value={formData.phone}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="variety" className="mb-1 font-medium">
-              ประเภท
+            <label htmlFor="address" className="mb-1 font-medium">
+              ที่อยู่
             </label>
-            <select
-              id="variety"
-              name="variety"
-              value={formData.variety}
+            <textarea
+              id="address"
+              name="address"
+              placeholder="ที่อยู่"
+              value={formData.address}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
-            >
-              <option value="">เลือกประเภท</option>
-              <option value="กข43">กข43</option>
-              <option value="กข31">กข31</option>
-              <option value="หอมมะลิ">หอมมะลิ</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col">
-            <label htmlFor="moisture" className="mb-1 font-medium">
-              moisture
-            </label>
-            <input
-              type="text"
-              id="moisture"
-              name="moisture"
-              placeholder="moisture"
-              value={formData.moisture}
-              onChange={handleChange}
-              className="border rounded px-3 py-2 w-full"
+              rows={4} // กำหนดความสูงของ textarea
             />
           </div>
         </div>
 
-        {/* ปุ่มบันทึก / ยกเลิก */}
         <div className="flex justify-end gap-2 mt-4">
           <button
             type="button"
@@ -167,4 +141,4 @@ const CreateStock = () => {
   );
 };
 
-export default CreateStock;
+export default CreateCreditor;

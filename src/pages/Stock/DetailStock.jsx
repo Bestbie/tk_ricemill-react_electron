@@ -109,7 +109,7 @@ const DetailStock = () => {
     <div className="p-4 space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* ข้อมูลทั่วไป */}
-        <div className="p-4 bg-white rounded shadow">
+        <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-2xl font-bold">รายละเอียดใบสั่ง</h1>
             <button
@@ -127,26 +127,26 @@ const DetailStock = () => {
               <label className="font-semibold">เลขที่ Lot :</label>{" "}
               {formData.lot_number}
             </div>
-            <div>
+            {/* <div>
               <label className="font-semibold">วัน/เวลา :</label>{" "}
               {formData.created_at}
             </div>
             <div>
               <label className="font-semibold">ผู้ส่ง :</label>{" "}
               {formData.supplier}
+            </div> */}
+            <div>
+              <label className="font-semibold">ชนิดข้าว :</label>{" "}
+              {formData.variety}
             </div>
             <div>
               <label className="font-semibold">น้ำหนักรวม :</label>{" "}
               {formData.gross_weight}
             </div>
-            <div>
-              <label className="font-semibold">พันธุ์ :</label>{" "}
-              {formData.variety}
-            </div>
-            <div>
+            {/* <div>
               <label className="font-semibold">ความชื้น :</label>{" "}
               {formData.moisture}
-            </div>
+            </div> */}
             <div className="flex items-center gap-2">
               <label className="font-semibold">สถานะ :</label>
               <span
@@ -165,7 +165,7 @@ const DetailStock = () => {
         </div>
 
         {/* Realtime Weight */}
-        <div className="p-6 bg-white rounded shadow flex flex-col">
+        <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
           <h1 className="text-2xl font-bold mb-2 text-left">น้ำหนักรวม</h1>
           <hr className="border-gray-400 mb-4" />
 
@@ -204,7 +204,7 @@ const DetailStock = () => {
         </div>
       </div>
 
-      <div className="p-6 bg-white rounded shadow flex flex-col">
+      <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-left">สต๊อกเข้า-ออก</h1>
           {/* <div className="flex gap-2">

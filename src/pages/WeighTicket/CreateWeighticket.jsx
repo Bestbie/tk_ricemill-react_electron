@@ -9,9 +9,11 @@ const CreateWeighticket = () => {
   const [formData, setFormData] = useState({
     w_number: "",
     car_reg: "",
-    seller: "",
-    varietie: "",
-    net: "",
+    buyer_seller: "",
+    w_type: "",
+    product: "",
+    address: "",
+    desc: "",
     status: "",
   });
 
@@ -37,15 +39,17 @@ const CreateWeighticket = () => {
     setFormData({
       w_number: "",
       car_reg: "",
-      seller: "",
-      varietie: "",
-      net: "",
+      buyer_seller: "",
+      w_type: "",
+      product: "",
+      address: "",
+      desc: "",
       status: "",
     });
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow max-w-12xl mx-auto mt-6 relative">
+    <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       {/* ปุ่มย้อนกลับมุมขวาบน */}
       <button
         onClick={() => navigate("/weigh_ticket")}
@@ -54,7 +58,7 @@ const CreateWeighticket = () => {
         <FiArrowLeft className="w-4 h-4" />
         ย้อนกลับ
       </button>
-      <h1 className="text-2xl font-bold mb-4">เพิ่มใบชั่ง</h1>
+      <h1 className="text-2xl font-bold mb-4">เพิ่มใบชั่งน้ำหนัก</h1>
       <hr className="border-b-1 border-gray-400 mb-4" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -62,13 +66,13 @@ const CreateWeighticket = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
             <label htmlFor="w_number" className="mb-1 font-medium">
-              เลขที่ใบสั่ง
+              เลขที่ใบชั่งน้ำหนัก
             </label>
             <input
               type="text"
               id="w_number"
               name="w_number"
-              placeholder="เลขที่ใบสั่ง"
+              placeholder="เลขที่ใบชั่งน้ำหนัก"
               value={formData.w_number}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
@@ -91,32 +95,49 @@ const CreateWeighticket = () => {
           </div>
         </div>
         {/* แถว 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="seller" className="mb-1 font-medium">
-              ผู้ขาย
+            <label htmlFor="buyer_seller" className="mb-1 font-medium">
+              ผู้ซื้อ/ผู้ขาย
             </label>
             <input
               type="text"
-              id="seller"
-              name="seller"
-              placeholder="ผู้ขาย"
-              value={formData.seller}
+              id="buyer_seller"
+              name="buyer_seller"
+              placeholder="ผู้ซื้อ/ผู้ขาย"
+              value={formData.buyer_seller}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="varietie" className="mb-1 font-medium">
-              พันธุ์
+            <label htmlFor="w_type" className="mb-1 font-medium">
+              ประเภท
+            </label>
+            <select
+              id="w_type"
+              name="w_type"
+              value={formData.w_type}
+              onChange={handleChange}
+              className="border rounded px-3 py-2 w-full"
+            >
+              <option value="">เลือกประเภท</option>
+              <option value="การซื้อ">การซื้อ</option>
+              <option value="การขาย">การขาย</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="product" className="mb-1 font-medium">
+              สินค้า
             </label>
             <input
               type="text"
-              id="varietie"
-              name="varietie"
-              placeholder="พันธุ์"
-              value={formData.varietie}
+              id="product"
+              name="product"
+              placeholder="สินค้า"
+              value={formData.product}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
@@ -125,17 +146,32 @@ const CreateWeighticket = () => {
         {/* แถว 3 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="net" className="mb-1 font-medium">
-              สุทธิ(กก.)
+            <label htmlFor="address" className="mb-1 font-medium">
+              ที่อยู่
             </label>
-            <input
-              type="number"
-              id="net"
-              name="net"
-              placeholder="สุทธิ(กก.)"
-              value={formData.net}
+            <textarea
+              id="address"
+              name="address"
+              placeholder="ที่อยู่"
+              value={formData.address}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
+              rows={4} // กำหนดความสูงของ textarea
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="desc" className="mb-1 font-medium">
+              คำอธิบาย
+            </label>
+            <textarea
+              id="desc"
+              name="desc"
+              placeholder="คำอธิบาย"
+              value={formData.desc}
+              onChange={handleChange}
+              className="border rounded px-3 py-2 w-full"
+              rows={4} // กำหนดความสูงของ textarea
             />
           </div>
         </div>

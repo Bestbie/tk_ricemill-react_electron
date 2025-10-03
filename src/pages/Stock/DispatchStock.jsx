@@ -69,7 +69,7 @@ const DispatchStock = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow max-w-12xl mx-auto mt-6 relative">
+    <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       <button
         onClick={() => navigate(`/detail_stock/${lot.id}`)}
         className="absolute top-4 right-4 flex items-center justify-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 min-w-[100px] rounded-full shadow cursor-pointer"

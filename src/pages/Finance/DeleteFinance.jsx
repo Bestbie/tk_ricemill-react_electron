@@ -18,7 +18,7 @@ const DeleteFinance = ({ onClose, onConfirm }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
       {/* Popup */}
-      <div className="relative bg-gray-100 rounded-lg shadow-lg p-6 w-80 z-50 pointer-events-auto">
+      <div className="relative bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition p-6 w-80 z-50 pointer-events-auto">
         <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
           <FiTrash2 className="w-5 h-5 text-red-500" />
           ยืนยันการลบ?

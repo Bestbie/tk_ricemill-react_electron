@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import "./DetailEquipmet.css";
 
-const DetailEQuipment = () => {
+const DetailEquipment = () => {
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
@@ -23,6 +23,11 @@ const DetailEQuipment = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [usageLogs, setUsageLogs] = useState([]);
+
+  // state สำหรับ log เพิ่มเติม
+  const [operator, setOperator] = useState("");
+  const [note, setNote] = useState("");
+  const [category, setCategory] = useState("ผลิต");
 
   const initialEquipments = [
     {
@@ -71,7 +76,7 @@ const DetailEQuipment = () => {
       e_location: "พื้นที่บรรจุภัณฑ์",
       e_total_time: "07.30 นาที",
       created_at: "2025-09-10",
-      status: "กำลังใช้งาน",
+      status: "กำลังซ่อม",
     },
   ];
 
@@ -81,13 +86,13 @@ const DetailEQuipment = () => {
     if (equipment) {
       setFormData({
         ...equipment,
-        e_total_time: 0, // เริ่มนับจาก 0 ทุกครั้ง
+        e_total_time: 0, // reset เวลา
       });
-      setIsRunning(false); // ปิดการนับเวลาเริ่มต้น
+      setIsRunning(false);
     }
   }, [id]);
 
-  // ใช้ useEffect คอยนับเวลา
+  // จับเวลา
   useEffect(() => {
     if (isRunning) {
       const id = setInterval(() => {
@@ -103,7 +108,6 @@ const DetailEQuipment = () => {
         setIntervalId(null);
       }
     }
-
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
@@ -144,32 +148,53 @@ const DetailEQuipment = () => {
 
   // ฟังก์ชันบันทึก
   const handleSave = () => {
-    // สร้าง log ใหม่
     const newLog = {
-      date: new Date().toLocaleDateString("th-TH", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }),
+      date: new Date().toLocaleDateString("th-TH"),
       time: formatTime(formData.e_total_time),
       equipment: formData.e_name,
+      operator,
+      category,
+      note,
     };
 
-    // เพิ่มเข้า usageLogs
     setUsageLogs((prev) => [newLog, ...prev]);
-
-    // แสดง toast
     showToast("save");
 
-    // รีเซตเวลาและหยุดนับ
+    // reset state
     setFormData({ ...formData, e_total_time: 0 });
     setIsRunning(false);
+    setOperator("");
+    setNote("");
   };
+
+  // Export CSV
+  // const handleExportCSV = () => {
+  //   const csvHeader = "วันที่,เวลา,อุปกรณ์,ผู้ใช้งาน,หมวดหมู่,หมายเหตุ\n";
+  //   const csvRows = usageLogs.map(
+  //     (log) =>
+  //       `${log.date},${log.time},${log.equipment},${log.operator},${log.category},${log.note}`
+  //   );
+  //   const blob = new Blob([csvHeader + csvRows.join("\n")], {
+  //     type: "text/csv",
+  //   });
+  //   const url = URL.createObjectURL(blob);
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.download = "equipment_logs.csv";
+  //   link.click();
+  // };
+
+  // รวมเวลาสะสมทั้งหมด (นาที)
+  const totalMinutes = usageLogs.reduce((sum, l) => {
+    const [m, s] = l.time.replace(" นาที", "").split(":").map(Number);
+    return sum + m * 60 + s;
+  }, 0);
+
   return (
     <div className="p-4 space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* รายละเอียด */}
-        <div className="p-4 bg-white rounded shadow">
+        <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-2xl font-bold">รายละเอียดอุปกรณ์</h1>
             <button
@@ -220,6 +245,8 @@ const DetailEQuipment = () => {
                     ? "bg-yellow-100 text-yellow-800 rounded-full"
                     : formData.status === "รอซ่อมบำรุง"
                     ? "bg-red-100 text-red-800 rounded-full"
+                    : formData.status === "กำลังซ่อม"
+                    ? "bg-blue-100 text-blue-800 rounded-full"
                     : ""
                 }`}
               >
@@ -229,8 +256,8 @@ const DetailEQuipment = () => {
           </div>
         </div>
 
-        {/* เวลาทำงาน */}
-        <div className="p-6 bg-white rounded shadow flex flex-col">
+        {/* เวลาทำงาน + ปุ่ม */}
+        <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col">
           <h1 className="text-2xl font-bold mb-2 text-left">
             เวลาทำงานของอุปกรณ์
           </h1>
@@ -284,32 +311,79 @@ const DetailEQuipment = () => {
               บันทึก
             </button>
           </div>
+
+          {/* ฟอร์มบันทึก */}
+          <div className="mt-4 space-y-2">
+            <input
+              type="text"
+              value={operator}
+              onChange={(e) => setOperator(e.target.value)}
+              className="border rounded px-3 py-2 w-full"
+              placeholder="ผู้ใช้งาน"
+            />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border rounded px-3 py-2 w-full"
+            >
+              <option value="ผลิต">ผลิต</option>
+              <option value="ทดสอบ">ทดสอบ</option>
+              <option value="ซ่อมบำรุง">ซ่อมบำรุง</option>
+              <option value="หยุดพัก">หยุดพัก</option>
+            </select>
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              className="border rounded px-3 py-2 w-full"
+              placeholder="หมายเหตุ..."
+            />
+          </div>
         </div>
       </div>
 
       {/* ตารางสรุป */}
-      <div className="p-4 bg-white rounded shadow space-y-4">
+      <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition space-y-4">
         <div>
-          <h2 className="text-lg font-bold mb-2">สรุปเวลาใช้งานอุปกรณ์</h2>
-          <hr className="border-gray-300" />
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-lg font-bold">สรุปเวลาใช้งานอุปกรณ์</h2>
+
+            <div className="flex gap-4">
+              <div className="p-3 bg-green-100 rounded-lg shadow text-sm">
+                เวลาสะสมทั้งหมด: {Math.floor(totalMinutes / 60)}:
+                {(totalMinutes % 60).toString().padStart(2, "0")} นาที
+              </div>
+              <div className="p-3 bg-blue-100 rounded-lg shadow text-sm">
+                จำนวนครั้งใช้งาน: {usageLogs.length} ครั้ง
+              </div>
+              {/* <button
+                onClick={handleExportCSV}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700"
+              >
+                Export CSV
+              </button> */}
+            </div>
+          </div>
+
+          <hr />
         </div>
 
-        <div className="p-4 bg-white rounded shadow space-y-4">
-          <h2 className="text-lg font-bold mb-2">สรุปเวลาใช้งานอุปกรณ์</h2>
-          <hr className="border-gray-300 mb-4" />
+        <div className="p-4 space-y-4">
           <div className="overflow-x-auto">
             <table className="min-w-full text-md bg-gray-200 shadow-md rounded mb-2">
               <thead>
                 <tr className="border-b">
-                  <th className="text-center p-5 px-5">วันที่</th>
-                  <th className="text-center p-5 px-5">เวลา</th>
-                  <th className="text-center p-5 px-5">อุปกรณ์</th>
+                  <th className="text-center p-2">วันที่</th>
+                  <th className="text-center p-2">เวลา</th>
+                  <th className="text-center p-2">อุปกรณ์</th>
+                  <th className="text-center p-2">ผู้ใช้งาน</th>
+                  <th className="text-center p-2">หมวดหมู่</th>
+                  <th className="text-center p-2">หมายเหตุ</th>
                 </tr>
               </thead>
               <tbody>
                 {usageLogs.length === 0 ? (
-                  <tr className="border-b hover:bg-gray-100 bg-white cursor-pointer">
-                    <td colSpan="3" className="text-center p-5 px-5">
+                  <tr className="border-b hover:bg-gray-100 bg-white">
+                    <td colSpan="6" className="text-center p-4">
                       ยังไม่มีบันทึก
                     </td>
                   </tr>
@@ -319,9 +393,12 @@ const DetailEQuipment = () => {
                       key={index}
                       className="border-b bg-white hover:bg-gray-100"
                     >
-                      <td className="text-center p-5 px-5">{log.date}</td>
-                      <td className="text-center p-5 px-5">{log.time}</td>
-                      <td className="text-center p-5 px-5">{log.equipment}</td>
+                      <td className="text-center p-2">{log.date}</td>
+                      <td className="text-center p-2">{log.time}</td>
+                      <td className="text-center p-2">{log.equipment}</td>
+                      <td className="text-center p-2">{log.operator}</td>
+                      <td className="text-center p-2">{log.category}</td>
+                      <td className="text-center p-2">{log.note}</td>
                     </tr>
                   ))
                 )}
@@ -335,4 +412,4 @@ const DetailEQuipment = () => {
   );
 };
 
-export default DetailEQuipment;
+export default DetailEquipment;

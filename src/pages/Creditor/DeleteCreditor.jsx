@@ -1,14 +1,14 @@
 import { FiTrash2, FiX } from "react-icons/fi";
 import toast from "react-hot-toast";
 
-const DeleteSale = ({ onClose, onConfirm }) => {
+const DeleteCreditor = ({ onClose, onConfirm }) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
     // แสดง Toast
     toast.success("ลบข้อมูลสำเร็จ!");
 
-    // เรียก callback ของ parent
+    // เรียก callback ของ parentaccc
     if (onConfirm) onConfirm();
 
     // ปิด popup
@@ -18,12 +18,12 @@ const DeleteSale = ({ onClose, onConfirm }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
       {/* Popup */}
-      <div className="relative bg-gray-100 rounded-lg shadow-lg p-6 w-80 z-50 pointer-events-auto">
+      <div className="relative bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition p-6 w-80 z-50 pointer-events-auto">
         <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
           <FiTrash2 className="w-5 h-5 text-red-500" />
           ยืนยันการลบ?
         </h2>
-        <p className="mb-4">คุณต้องการลบใบสั่งขายนี้หรือไม่?</p>
+        <p className="mb-4">คุณต้องการลบเจ้าหนี้นี้หรือไม่?</p>
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
@@ -43,4 +43,4 @@ const DeleteSale = ({ onClose, onConfirm }) => {
   );
 };
 
-export default DeleteSale;
+export default DeleteCreditor;

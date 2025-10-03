@@ -13,47 +13,41 @@ const EditFinance = () => {
     {
       id: 1,
       f_number: "BIL-20250922-001",
-      created_by: "นายดำ",
+      f_list: "การขาย1",
+      created_at: "2025-08-22",
+      f_type_money: "เงินสด",
       amount: "10,000",
       f_type: "ค่าขนส่ง",
-      f_tax: "1 %",
       status: "จ่ายแล้ว",
     },
     {
       id: 2,
       f_number: "BIL-20250922-002",
-      created_by: "นางแดง",
-      amount: "5,500",
+      f_list: "การซื้อ2",
+      created_at: "2025-08-23",
+      f_type_money: "โอนจ่าย",
+      amount: "25,500",
       f_type: "ค่าวัตถุดิบ",
-      f_tax: "3 %",
       status: "รอจ่าย",
     },
     {
       id: 3,
       f_number: "BIL-20250922-003",
-      created_by: "นายเขียว",
-      amount: "8,750",
+      f_list: "การขาย3",
+      created_at: "2025-08-24",
+      f_type_money: "เงินสด",
+      amount: "7,800",
       f_type: "ค่าบริการ",
-      f_tax: "2 %",
-      status: "รอจ่าย",
-    },
-    {
-      id: 4,
-      f_number: "BIL-20250922-004",
-      created_by: "นางฟ้า",
-      amount: "12,300",
-      f_type: "ค่าขนส่ง",
-      f_tax: "1 %",
       status: "จ่ายแล้ว",
     },
   ];
 
   const [formData, setFormData] = useState({
     f_number: "",
-    created_by: "",
+    f_list: "",
+    f_type_money: "",
     amount: "",
     f_type: "",
-    f_tax: "",
     status: "",
   });
 
@@ -89,7 +83,7 @@ const EditFinance = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow max-w-12xl mx-auto mt-6 relative">
+    <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       {/* ปุ่มย้อนกลับ */}
       <button
         onClick={() => navigate("/finance")}
@@ -121,15 +115,15 @@ const EditFinance = () => {
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="created_by" className="mb-1 font-medium">
-              ผู้จ่าย
+            <label htmlFor="f_list" className="mb-1 font-medium">
+              รายการ
             </label>
             <input
               type="text"
-              id="created_by"
-              name="created_by"
-              placeholder="ผู้จ่าย"
-              value={formData.created_by}
+              id="f_list"
+              name="f_list"
+              placeholder="รายการ"
+              value={formData.f_list}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
@@ -138,6 +132,23 @@ const EditFinance = () => {
 
         {/* แถว 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col">
+            <label htmlFor="f_type_money" className="mb-1 font-medium">
+              ประเภท
+            </label>
+            <select
+              id="f_type_money"
+              name="f_type_money"
+              value={formData.f_type_money}
+              onChange={handleChange}
+              className="border rounded px-3 py-2 w-full"
+            >
+              <option value="">เลือกประเภท</option>
+              <option value="เงินสด">เงินสด</option>
+              <option value="โอนจ่าย">โอนจ่าย</option>
+            </select>
+          </div>
+
           <div className="flex flex-col">
             <label htmlFor="amount" className="mb-1 font-medium">
               ยอดเงิน
@@ -152,7 +163,9 @@ const EditFinance = () => {
               className="border rounded px-3 py-2 w-full"
             />
           </div>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
             <label htmlFor="f_type" className="mb-1 font-medium">
               ประเภท
@@ -169,23 +182,6 @@ const EditFinance = () => {
               <option value="ค่าวัตถุดิบ">ค่าวัตถุดิบ</option>
               <option value="ค่าบริการ">ค่าบริการ</option>
             </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col">
-            <label htmlFor="f_tax" className="mb-1 font-medium">
-              หัก ณ ที่จ่าย
-            </label>
-            <input
-              type="text"
-              id="f_tax"
-              name="f_tax"
-              placeholder="หัก ณ ที่จ่าย"
-              value={formData.f_tax}
-              onChange={handleChange}
-              className="border rounded px-3 py-2 w-full"
-            />
           </div>
         </div>
 

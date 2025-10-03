@@ -93,7 +93,7 @@ const EditStock = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow max-w-12xl mx-auto mt-6 relative">
+    <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       {/* ปุ่มย้อนกลับ */}
       <button
         onClick={() => navigate("/stock")}

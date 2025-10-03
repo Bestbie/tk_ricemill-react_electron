@@ -1,8 +1,9 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const ChangeStatus = ({ currentStatus, onClose, onSave }) => {
+const ChangeStatus = ({ currentStatus, currentNote, onClose, onSave }) => {
   const [status, setStatus] = useState(currentStatus || "");
+  const [note, setNote] = useState(currentNote || ""); // ✅ ช่องหมายเหตุ
 
   const handleSave = () => {
     if (!status) {
@@ -10,7 +11,13 @@ const ChangeStatus = ({ currentStatus, onClose, onSave }) => {
       return;
     }
 
-    if (onSave) onSave(status);
+    // ✅ ถ้าเลือกสถานะที่เกี่ยวกับซ่อม แต่ไม่ได้กรอกหมายเหตุ
+    if ((status === "รอซ่อมบำรุง" || status === "กำลังซ่อม") && !note) {
+      toast.error("กรุณากรอกรายละเอียดการซ่อมก่อนบันทึก");
+      return;
+    }
+
+    if (onSave) onSave({ status, note });
 
     toast.success(`เปลี่ยนสถานะเป็น "${status}" สำเร็จ`);
     onClose();
@@ -18,8 +25,10 @@ const ChangeStatus = ({ currentStatus, onClose, onSave }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded shadow-lg w-80">
+      <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-lg hover:shadow-xl transition w-96">
         <h2 className="text-xl font-bold mb-4">เปลี่ยนสถานะอุปกรณ์</h2>
+
+        {/* dropdown เลือกสถานะ */}
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
@@ -29,17 +38,30 @@ const ChangeStatus = ({ currentStatus, onClose, onSave }) => {
           <option value="กำลังใช้งาน">กำลังใช้งาน</option>
           <option value="พร้อมใช้งาน">พร้อมใช้งาน</option>
           <option value="รอซ่อมบำรุง">รอซ่อมบำรุง</option>
+          <option value="กำลังซ่อม">กำลังซ่อม</option>
         </select>
+
+        {/* ช่องหมายเหตุ จะแสดงเมื่อเลือกสถานะที่เกี่ยวกับซ่อม */}
+        {(status === "รอซ่อมบำรุง" || status === "กำลังซ่อม") && (
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="กรอกรายละเอียดการซ่อม..."
+            className="w-full border rounded px-3 py-2 mb-4"
+            rows="3"
+          />
+        )}
+
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded"
+            className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-full cursor-pointer"
           >
             ยกเลิก
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-green-500 hover:bg-green-700 text-white rounded"
+            className="px-4 py-2 bg-green-500 hover:bg-green-700 text-white rounded-full cursor-pointer"
           >
             บันทึก
           </button>

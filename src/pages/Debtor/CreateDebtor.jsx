@@ -3,16 +3,14 @@ import { FiX, FiCheck, FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-const CreateFinance = () => {
+const CreateDebtor = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    f_number: "",
-    f_list: "",
-    f_type_money: "",
-    amount: "",
-    f_type: "",
-    status: "",
+    c_number: "",
+    name: "",
+    address: "",
+    phone: "",
   });
 
   const handleChange = (e) => {
@@ -27,124 +25,98 @@ const CreateFinance = () => {
     // แสดง Toast
     toast.success("บันทึกสำเร็จ!");
 
-    // ไปหน้า /weigh_ticket หลัง 1 วินาที
+    // ไปหน้า /debtor หลัง 1 วินาที
     setTimeout(() => {
-      navigate("/finance");
+      navigate("/debtor");
     }, 1000);
   };
 
   const handleReset = () => {
     setFormData({
-      f_number: "",
-      f_list: "",
-      f_type_money: "",
-      amount: "",
-      f_type: "",
-      status: "",
+      c_number: "",
+      name: "",
+      address: "",
+      phone: "",
     });
   };
 
   return (
     <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       <button
-        onClick={() => navigate("/finance")}
+        onClick={() => navigate("/creditor")}
         className="absolute top-4 right-4 flex items-center justify-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 min-w-[100px] rounded-full shadow cursor-pointer"
       >
         <FiArrowLeft className="w-4 h-4" />
         ย้อนกลับ
       </button>
-      <h1 className="text-2xl font-bold mb-4">เพิ่มการเงิน</h1>
+      <h1 className="text-2xl font-bold mb-4">เพิ่มลูกหนี้</h1>
       <hr className="border-b-1 border-gray-400 mb-4" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* แถว 1 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="f_number" className="mb-1 font-medium">
-              เลขที่บิล
+            <label htmlFor="c_number" className="mb-1 font-medium">
+              เลขที่ลูกหนี้
             </label>
             <input
               type="text"
-              id="f_number"
-              name="f_number"
-              placeholder="เลขที่บิล"
-              value={formData.f_number}
+              id="c_number"
+              name="c_number"
+              placeholder="เลขที่ลูกหนี้"
+              value={formData.c_number}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
+
           <div className="flex flex-col">
-            <label htmlFor="f_list" className="mb-1 font-medium">
-              รายการ
+            <label htmlFor="name" className="mb-1 font-medium">
+              ชื่อลูกหนี้
             </label>
             <input
               type="text"
-              id="f_list"
-              name="f_list"
-              placeholder="รายการ"
-              value={formData.f_list}
+              id="name"
+              name="name"
+              placeholder="ชื่อลูกหนี้"
+              value={formData.name}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
         </div>
-
         {/* แถว 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="f_type_money" className="mb-1 font-medium">
-              ประเภทเงิน
-            </label>
-            <select
-              id="f_type_money"
-              name="f_type_money"
-              value={formData.f_type_money}
-              onChange={handleChange}
-              className="border rounded px-3 py-2 w-full"
-            >
-              <option value="">เลือกประเภท</option>
-              <option value="เงินสด">เงินสด</option>
-              <option value="โอนจ่าย">โอนจ่าย</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label htmlFor="amount" className="mb-1 font-medium">
-              ยอดเงิน
+            <label htmlFor="phone" className="mb-1 font-medium">
+              เบอร์โทร
             </label>
             <input
-              type="text"
-              id="amount"
-              name="amount"
-              placeholder="ยอดเงิน"
-              value={formData.amount}
+              type="number"
+              id="phone"
+              name="phone"
+              placeholder="เบอร์โทร"
+              value={formData.phone}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
             />
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label htmlFor="f_type" className="mb-1 font-medium">
-              ประเภท
+            <label htmlFor="address" className="mb-1 font-medium">
+              ที่อยู่
             </label>
-            <select
-              id="f_type"
-              name="f_type"
-              value={formData.f_type}
+            <textarea
+              id="address"
+              name="address"
+              placeholder="ที่อยู่"
+              value={formData.address}
               onChange={handleChange}
               className="border rounded px-3 py-2 w-full"
-            >
-              <option value="">เลือกประเภท</option>
-              <option value="ค่าขนส่ง">ค่าขนส่ง</option>
-              <option value="ค่าวัตถุดิบ">ค่าวัตถุดิบ</option>
-              <option value="ค่าบริการ">ค่าบริการ</option>
-            </select>
+              rows={4} // กำหนดความสูงของ textarea
+            />
           </div>
         </div>
 
-        {/* ปุ่มบันทึก / ยกเลิก */}
         <div className="flex justify-end gap-2 mt-4">
           <button
             type="button"
@@ -169,4 +141,4 @@ const CreateFinance = () => {
   );
 };
 
-export default CreateFinance;
+export default CreateDebtor;

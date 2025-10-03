@@ -71,7 +71,7 @@ const AdmitStock = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow max-w-12xl mx-auto mt-6 relative">
+    <div className="p-6 bg-white bordor bordor-gray-200 rounded-xl shadow-lg hover:shadow-xl transition max-w-12xl mx-auto mt-6 relative">
       <button
         onClick={() => navigate(`/detail_stock/${lot.id}`)}
         className="absolute top-4 right-4 flex items-center justify-center gap-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 min-w-[100px] rounded-full shadow cursor-pointer"
@@ -80,7 +80,7 @@ const AdmitStock = () => {
         ย้อนกลับ
       </button>
       <h1 className="text-2xl font-bold mb-4">รับเข้า Lot #{lot_number}</h1>
-      <hr className="border-b-1 border-gray-400 mb-4" />
+      <hr className="border-gray-400 mb-4" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4">

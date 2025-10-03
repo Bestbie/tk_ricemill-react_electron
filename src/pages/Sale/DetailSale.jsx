@@ -139,7 +139,7 @@ const DetailSale = () => {
       </div>
 
       {/* ฝั่งขวา: สรุปคำสั่งขาย */}
-      <div className="lg:w-[360px] w-full p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition">
+      <div className="h-100 lg:w-[360px] w-full p-6 bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition">
         <h2 className="text-2xl font-semibold">สรุปคำสั่งขาย</h2>
         <hr className="border-gray-300 my-5" />
 
@@ -201,7 +201,7 @@ const DetailSale = () => {
           )}
           <button
             onClick={() => navigate("/sale")}
-            className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition rounded-full"
+            className="w-full py-3 mt-6 cursor-pointer bg-green-500 text-white font-medium hover:bg-green-600 transition rounded-full"
           >
             ยืนยันการสั่งขาย
           </button>

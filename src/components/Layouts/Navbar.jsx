@@ -90,7 +90,7 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <nav className="bg-green-400 text-black px-6 py-3 flex items-center justify-between border-b relative">
+    <nav className="bg-green-300 text-black px-6 py-3 flex items-center justify-between border-b relative">
       {/* Left: Hamburger + Logo + Links */}
       <div className="flex items-center gap-6">
         {/* Hamburger */}

@@ -176,7 +176,7 @@ const DetailPurchase = () => {
       </div>
 
       {/* ฝั่งขวา: สรุปคำสั่งซื้อ */}
-      <div className="lg:w-[360px] w-full p-6 bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-xl transition">
+      <div className="h-100 lg:w-[360px] w-full p-6 bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-xl transition">
         <h2 className="text-2xl font-semibold">สรุปใบสั่งซื้อ</h2>
         <hr className="border-gray-300 my-5" />
         <div className="text-gray-700 space-y-2">
@@ -237,7 +237,7 @@ const DetailPurchase = () => {
           )}
           <button
             onClick={() => navigate("/purchase")}
-            className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition rounded-full"
+            className="w-full py-3 mt-6 cursor-pointer bg-green-500 text-white font-medium hover:bg-green-600 transition rounded-full"
           >
             ยืนยันการสั่งซื้อ
           </button>

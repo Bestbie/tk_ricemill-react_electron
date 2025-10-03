@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 const ChangeStatus = ({ currentStatus, currentNote, onClose, onSave }) => {
   const [status, setStatus] = useState(currentStatus || "");
-  const [note, setNote] = useState(currentNote || ""); // ✅ ช่องหมายเหตุ
+  const [note, setNote] = useState(currentNote || "");
 
   const handleSave = () => {
     if (!status) {
@@ -11,7 +11,6 @@ const ChangeStatus = ({ currentStatus, currentNote, onClose, onSave }) => {
       return;
     }
 
-    // ✅ ถ้าเลือกสถานะที่เกี่ยวกับซ่อม แต่ไม่ได้กรอกหมายเหตุ
     if ((status === "รอซ่อมบำรุง" || status === "กำลังซ่อม") && !note) {
       toast.error("กรุณากรอกรายละเอียดการซ่อมก่อนบันทึก");
       return;
